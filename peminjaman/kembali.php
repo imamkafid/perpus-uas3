@@ -1,7 +1,7 @@
 <?php
 include '../config/koneksi.php';
 $peminjaman_id = $_GET['id'];
-$sql = "UPDATE peminjaman SET status='kembali' WHERE peminjaman_id='$peminjaman_id'";
+$sql = "UPDATE peminjaman SET status='Kembali' WHERE peminjaman_id='$peminjaman_id'";
 $result = $mysqli->query("SELECT tanggal_kembali FROM peminjaman WHERE peminjaman_id='$peminjaman_id'");
 $row = $result->fetch_assoc();
 $tgl_kemb = $row['tanggal_kembali'];
@@ -16,7 +16,7 @@ $hari = $jarak / 60 / 60 / 24;
 
 if ($hari >= 1) {
     $status = "terlambat";
-    $denda = $hari * 5000;
+    $denda = $hari * 10000;
 }else{
     $status = "dikembalikan";
     $denda = 0;

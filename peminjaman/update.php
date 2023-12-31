@@ -1,7 +1,6 @@
 <?php
 include '../config/koneksi.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
- $peminjaman_id = $_POST['id'];
  $buku_id = $_POST['buku_id'];
  $anggota_id = $_POST['anggota_id'];
  $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
@@ -16,24 +15,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  }
  $mysqli->close();
 }
-
-$id = $_GET['id']; // ID dari buku yang akan diupdate
-$sql = "SELECT * FROM peminjaman WHERE peminjaman.peminjaman_id=$id";
-$result = $mysqli->query($sql);
-if ($result->num_rows > 0) {
- $row = $result->fetch_array();
+include '../head.php';
  ?>
- <form action="update.php" method="POST">
- ID Buku: <input type="text" name="buku_id" value="<?php echo $row['buku_id']; ?>"><br>
- ID Peminjam: <input type="text" name="anggota_id" value="<?php echo $row['anggota_id'];?>"><br>
- Tanggal Peminjaman: <input type="date" name="tanggal_peminjaman" value="<?php echo $row['tanggal_peminjaman']; ?>"><br>
- Tanggal Kembali: <input type="date" name="tanggal_kembali" value="<?php echo $row['tanggal_kembali']; ?>"><br>
- <input type="hidden" name="id" value="<?php echo $row['peminjaman_id']; ?>">
- <input type="submit" value="Update">
- </form>
- <?php
-} else {
- echo "Data tidak ditemukan.";
-}
-$mysqli->close();
+
+<main>
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">EDIT DATA PEMINJAMAN BUKU</h6>
+        </div>
+        <div class="p-5">
+            <form method="POST">
+            <?php 
+            $sql3 = "SELECT * FROM buku";
+            $result = $mysqli->query($sql3); ?>
+            <div class="form-group">
+                <label >Judul:</label>
+                <select name="buku_id" class="form-control">
+            
+                <?php 
+                if ($result->num_rows > 0) {
+                while($row = $result->fetch_array()) {?>
+                <option value="<?php echo $row['buku_id']; ?>"><?php echo $row['judul']; ?></option>
+                <?php }}?>
+            </select>
+            </div>
+
+            
+            <?php 
+            $sql4 = "SELECT * FROM anggota";
+            $result = $mysqli->query($sql4); ?>
+            <div class="form-group">
+                  <label >Nama Peminjam:</label>
+                <select name="anggota_id" class="form-control">
+            
+              <?php
+              if ($result->num_rows > 0) {
+              while($row = $result->fetch_array()) { ?>
+              <option value="<?php echo $row['anggota_id']; ?>"><?php echo $row['nama']; ?></option>
+            <?php }}?>
+            </select>
+            </div>
+            <div class="form-group">
+                  <label >Tanggal Peminjaman:</label>
+                <input type="date" name="tanggal_peminjaman" class="form-control form-control-user" value="<?php echo $row['tanggal_peminjaman']; ?>"  placeholder="Tanggal Peminjaman">
+            </div>
+            <div class="form-group">
+                  <label >Tanggal Kembali:</label>
+                <input type="date" name="tanggal_kembali" class="form-control form-control-user" value="<?php echo $row['tanggal_pekembali']; ?>"  placeholder="Tanggal Kembali">
+            </div>
+            <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-primary btn-user btn-block" style="background-color:green" placeholder="submit">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>           
+</main>
+
+<?php
+   include '../foot.php';
 ?>

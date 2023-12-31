@@ -1,15 +1,17 @@
 <?php
    include '../config/koneksi.php';
    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $anggota_id = $_POST['anggota_id'];
+        $staff_id = $_POST['staff_id'];
        $nama = $_POST['nama'];
-       $alamat = $_POST['alamat'];
+       $jabatan = $_POST['jabatan'];
        $email = $_POST['email'];
+       $username = $_POST['username'];
+       $pass = $_POST['pass'];
        $telepon = $_POST['telepon'];
-       $sql = "INSERT INTO anggota (anggota_id, nama, alamat, email, telepon) VALUES ('$anggota_id', '$nama', '$alamat', '$email', '$telepon')";
+       $sql = "INSERT INTO staff (staff_id, nama, jabatan, email, username, pass, telepon) VALUES ('$staff_id', '$nama', '$jabatan', '$email', '$username', '$pass', '$telepon')";
    
        if ($mysqli->query($sql) === TRUE) {
-           header("Location: ../anggota");
+           header("Location: ../staff");
            exit;
        } else {
            echo "Error: " . $sql . "<br>" . $mysqli->error;
@@ -23,21 +25,27 @@
 <div class="container-fluid">
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">TAMBAH DATA ANGGOTA</h6>
+        <h6 class="m-0 font-weight-bold text-primary">TAMBAH DATA KARYAWAN</h6>
     </div>
             <div class="p-5">
             <form method="POST">
             <div class="form-group">
-                <input type="text" name="anggota_id" class="form-control form-control-user" placeholder="ID Anggota">
+                <input type="text" name="staff_id" class="form-control form-control-user" placeholder="ID Karyawan">
             </div>
             <div class="form-group">
                 <input type="text" name="nama" class="form-control form-control-user" placeholder="Nama">
             </div>
             <div class="form-group">
-                <input type="text" name="alamat" class="form-control form-control-user" placeholder="Alamat">
+                <input type="text" name="jabatan" class="form-control form-control-user" placeholder="Jabatan">
             </div>
             <div class="form-group">
                 <input type="email" name="email" class="form-control form-control-user" placeholder="Email ">
+            </div>
+            <div class="form-group">
+                <input type="text" name="username" class="form-control form-control-user" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="text" name="pass" class="form-control form-control-user" placeholder="Password">
             </div>
             <div class="form-group">
                 <input type="number" name="telepon" class="form-control form-control-user" placeholder="Telepon ">
